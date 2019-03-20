@@ -1,7 +1,9 @@
 package com.example.recyclerview.controller;
 
 import android.app.Activity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.example.recyclerview.model.api.RestApiManager;
 import com.example.recyclerview.model.api.RestStreamResponse;
@@ -54,7 +56,7 @@ public class StreamController {
                 //System.out.println("PLZ : " + listUser.get(0).getProfile_image_url() + " " + listUser.get(0).getLogin());
                 anotherListUser.add(listUser.get(0));
                 listStreamer.get(anotherListUser.size()-1).setProfile_image_url(listUser.get(0).getProfile_image_url());
-                System.out.println("PLZ : " + ii + "" + listStreamer.get(ii).getProfile_image_url() + " " + listStreamer.get(ii).getUser_name());
+                //System.out.println("PLZ : " + ii + "" + listStreamer.get(ii).getProfile_image_url() + " " + listStreamer.get(ii).getUser_name());
                 if(anotherListUser.size()== listStreamer.size()) {
                     act.setStreamerList(listStreamer);
                 }

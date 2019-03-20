@@ -24,19 +24,28 @@ import com.example.recyclerview.model.obj.User;
 
 import com.example.recyclerview.R;
 
+
+
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+    public interface OnItemClickListener {
+        void onItemClick(Streamer item);
+    }
     private List<Streamer> values;
     private Context context;
     private StreamController sc;
+    private View.OnClickListener mClickListener;
+    private OnItemClickListener listener;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
+
+
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         private TextView txtHeader;
         private ImageView img;
         private View layout;
-
 
         public ViewHolder(View v) {
             super(v);
@@ -46,6 +55,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         }
         public ImageView getImage() {
             return this.img;
+        }
+
+        public void bind(final Streamer item, final OnItemClickListener listener) {
+        layout.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    listener.onItemClick(item);
+                }
+            });
         }
     }
 
@@ -60,10 +77,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<Streamer> myDataset, Context ctx, StreamController sc) {
+    public MyAdapter(List<Streamer> myDataset, Context ctx, StreamController sc, OnItemClickListener listener) {
         values = myDataset;
         this.context = ctx;
         this.sc = sc;
+        this.listener = listener;
         System.out.println("LLL : " + values.toString());
     }
 
@@ -78,6 +96,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 inflater.inflate(R.layout.row_layout, parent, false);
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mClickListener.onClick(view);
+            }
+        });
         return vh;
     }
 
@@ -89,6 +113,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         final Streamer streamer = values.get(position);
         //System.out.println("ID : " + streamer.getId());
         //System.out.println(user.getProfile_image_url());
+        holder.bind(values.get(position), listener);
         System.out.println("POS : " + position);
         //final User user = urlImage.get(position);
         Glide.with(this.context)
@@ -97,18 +122,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 .into(holder.getImage());
 
         holder.txtHeader.setText(streamer.getUser_name());
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(GridLayout.LayoutParams.WRAP_CONTENT, GridLayout.LayoutParams.WRAP_CONTENT);
-        lp.setMargins(0, 50, 0, 50);
-
-        if(position==0||position==1) {
-            //holder.txtHeader.setLayoutParams(lp);
-        }
     }
+
+
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return values.size();
     }
+
 
 }

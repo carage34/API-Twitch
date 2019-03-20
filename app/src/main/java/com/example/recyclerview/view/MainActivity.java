@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.example.recyclerview.controller.MyAdapter;
 import com.example.recyclerview.R;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class MainActivity extends Activity {
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private MyAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private StreamController sc;
     private ArrayList<User> user;
@@ -46,7 +47,12 @@ public class MainActivity extends Activity {
 
     public void setStreamerList(List<Streamer> streamerList) {
         System.out.println("RRR: " + streamerList.size());
-        mAdapter = new MyAdapter(streamerList, this, this.sc);
+        mAdapter = new MyAdapter(streamerList, this, this.sc, new MyAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Streamer item) {
+                Toast.makeText(getBaseContext(), item.getUser_name(), Toast.LENGTH_LONG).show();
+            }
+        });
         recyclerView.setAdapter(mAdapter);
     }
 }
