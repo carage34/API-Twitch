@@ -47,6 +47,34 @@ public class Streamer {
     String viewer_count;
     String thumbnail_url;
     String type;
+    String language;
+    String started_at;
+    String game_id;
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getStarted_at() {
+        return started_at;
+    }
+
+    public void setStarted_at(String started_at) {
+        this.started_at = started_at;
+    }
+
+    public String getGame_id() {
+        return game_id;
+    }
+
+    public void setGame_id(String game_id) {
+        this.game_id = game_id;
+    }
+
 
     public String getProfile_image_url() {
         return profile_image_url;

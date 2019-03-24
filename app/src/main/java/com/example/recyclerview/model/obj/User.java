@@ -5,6 +5,7 @@ public class User {
     private String login;
     private String description;
     private String profile_image_url;
+    private String view_count;
 
     public String getId() {
         return id;
@@ -46,5 +47,5 @@ public class User {
         this.view_count = view_count;
     }
 
-    private String view_count;
+
 }

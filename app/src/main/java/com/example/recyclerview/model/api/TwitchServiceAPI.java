@@ -22,4 +22,10 @@ public interface TwitchServiceAPI {
     @GET("users")
     Call<RestUserResponse> getUser(@Query("id")String id);
 
+    @Headers({
+            "Client-ID: 1utxz63kdn8vmccch4stxn3payttdi"
+    })
+    @GET("games")
+    Call<RestGameResponse> getGame(@Query("id")String id);
+
 }

@@ -1,18 +1,17 @@
 package com.example.recyclerview.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
-
 import com.example.recyclerview.controller.MyAdapter;
 import com.example.recyclerview.R;
 import com.example.recyclerview.controller.StreamController;
+import com.example.recyclerview.model.obj.Game;
 import com.example.recyclerview.model.obj.Streamer;
 import com.example.recyclerview.model.obj.User;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +31,8 @@ public class MainActivity extends Activity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         sc = new StreamController(this);
         sc.getStreams();
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
     }
     public void showList(List<Streamer> list) {
@@ -47,12 +48,24 @@ public class MainActivity extends Activity {
 
     public void setStreamerList(List<Streamer> streamerList) {
         System.out.println("RRR: " + streamerList.size());
-        mAdapter = new MyAdapter(streamerList, this, this.sc, new MyAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(Streamer item) {
-                Toast.makeText(getBaseContext(), item.getUser_name(), Toast.LENGTH_LONG).show();
-            }
-        });
+        mAdapter = new MyAdapter(streamerList, this, this.sc);
         recyclerView.setAdapter(mAdapter);
+    }
+
+    public void startSecondActivity(Game game, User user, Streamer streamer) {
+        Intent intent = new Intent(MainActivity.this, UserActivity.class);
+        intent.putExtra("name", streamer.getUser_name());
+        intent.putExtra("description", user.getDescription());
+        intent.putExtra("view_count", user.getView_count());
+        intent.putExtra("profile_image", user.getProfile_image_url());
+        intent.putExtra("game", game.getName());
+        intent.putExtra("game_image", game.getBox_art_url());
+        intent.putExtra("title", streamer.getTitle());
+        intent.putExtra("viewer_count", streamer.getViewer_count());
+        intent.putExtra("langage", streamer.getLanguage());
+        intent.putExtra("type", streamer.getType());
+        intent.putExtra("started_at", streamer.getStarted_at());
+        MainActivity.this.startActivity(intent);
+
     }
 }

@@ -1,35 +1,24 @@
 package com.example.recyclerview.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.recyclerview.model.api.RestApiManager;
-import com.example.recyclerview.model.api.TwitchServiceAPI;
 import com.example.recyclerview.model.obj.Streamer;
-import com.example.recyclerview.model.obj.User;
 
 import com.example.recyclerview.R;
-
+import com.example.recyclerview.view.MainActivity;
 
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-    public interface OnItemClickListener {
-        void onItemClick(Streamer item);
-    }
     private List<Streamer> values;
     private Context context;
     private StreamController sc;
@@ -77,12 +66,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<Streamer> myDataset, Context ctx, StreamController sc, OnItemClickListener listener) {
+    public MyAdapter(List<Streamer> myDataset, MainActivity ctx, StreamController sc) {
         values = myDataset;
         this.context = ctx;
         this.sc = sc;
-        this.listener = listener;
         System.out.println("LLL : " + values.toString());
+        listener = new StreamerListener(values, sc, ctx);
     }
 
     // Create new views (invoked by the layout manager)

@@ -6,8 +6,10 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.recyclerview.model.api.RestApiManager;
+import com.example.recyclerview.model.api.RestGameResponse;
 import com.example.recyclerview.model.api.RestStreamResponse;
 import com.example.recyclerview.model.api.RestUserResponse;
+import com.example.recyclerview.model.obj.Game;
 import com.example.recyclerview.model.obj.Streamer;
 import com.example.recyclerview.model.obj.User;
 import com.example.recyclerview.view.MainActivity;
@@ -23,6 +25,7 @@ public class StreamController {
     private  MainActivity act;
     private List<Streamer> listStreamer;
     private List<User> listUser;
+    private List<Game> listGame;
     private ArrayList<User> anotherListUser = new ArrayList<User>();
     private int ii;
     public StreamController(MainActivity activity) {
@@ -47,6 +50,9 @@ public class StreamController {
 
     public void getUsers(String id, int i) {
         ii = i;
+        if(i==0) {
+            anotherListUser = new ArrayList<>();
+        }
         Call<RestUserResponse> call = RestApiManager.getTwitchAPI().getUser(id);
         call.enqueue(new Callback<RestUserResponse>() {
             @Override
@@ -69,7 +75,7 @@ public class StreamController {
         });
     }
 
-    public User getUser(String id) {
+    public void getUser(String id) {
         Call<RestUserResponse> call = RestApiManager.getTwitchAPI().getUser(id);
         call.enqueue(new Callback<RestUserResponse>() {
             @Override
@@ -83,6 +89,23 @@ public class StreamController {
                 Log.d("Erreur", "API KO");
             }
         });
-        return listUser.get(0);
+    }
+
+    public void getGame(String id) {
+        Call<RestGameResponse> call = RestApiManager.getTwitchAPI().getGame(id);
+        call.enqueue(new Callback<RestGameResponse>() {
+            @Override
+            public void onResponse(Call<RestGameResponse> call, Response<RestGameResponse> response) {
+                RestGameResponse restGameResponse = response.body();
+                listGame = restGameResponse.getData();
+                System.out.println("YYY : " + listGame.get(0));
+            }
+
+            @Override
+            public void onFailure(Call<RestGameResponse> call, Throwable t) {
+                Log.d("Erreur", "API KO");
+            }
+        });
+        //return listGame.get(0);
     }
 }
