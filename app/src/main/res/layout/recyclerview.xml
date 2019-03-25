@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dip"
-        android:text="Top 10 streamer en live"
+        android:text="Top 20 streamer en live"
         android:textSize="20dip"
         android:textAlignment="center"/>
 

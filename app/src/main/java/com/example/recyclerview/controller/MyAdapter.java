@@ -33,6 +33,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         private TextView txtHeader;
+        private TextView txtSecond;
         private ImageView img;
         private View layout;
 
@@ -41,6 +42,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             layout = v;
             txtHeader = (TextView) v.findViewById(R.id.firstLine);
             img = (ImageView)v.findViewById(R.id.icon);
+            txtSecond = (TextView) v.findViewById(R.id.secondLine);
         }
         public ImageView getImage() {
             return this.img;
@@ -111,6 +113,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 .into(holder.getImage());
 
         holder.txtHeader.setText(streamer.getUser_name());
+        holder.txtSecond.setText(streamer.getTitle());
     }
 
 

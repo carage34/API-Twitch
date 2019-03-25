@@ -3,8 +3,11 @@ package com.example.recyclerview.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.recyclerview.R;
 import com.example.recyclerview.controller.StreamController;
 
@@ -14,6 +17,10 @@ public class UserActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_activity);
         Intent intent = getIntent();
+        ImageView img = findViewById(R.id.imageView1);
+        img.setScaleType(ImageView.ScaleType.FIT_XY);
+        Glide.with(getApplicationContext()).load(intent.getStringExtra("offline_image")).into((ImageView)findViewById(R.id.imageView1));
+        /*
         TextView info = (TextView) findViewById(R.id.info);
         info.setText("Info de " + intent.getStringExtra("name"));
 
@@ -40,7 +47,7 @@ public class UserActivity extends Activity {
 
         TextView view_count  = (TextView) findViewById(R.id.total_views);
         view_count.setText("Vue total de la chaine  : " + intent.getStringExtra("view_count"));
-
+        */
 
 
     }

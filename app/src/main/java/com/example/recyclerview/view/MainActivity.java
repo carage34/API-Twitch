@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.example.recyclerview.controller.MyAdapter;
 import com.example.recyclerview.R;
@@ -18,7 +20,7 @@ import java.util.List;
 public class MainActivity extends Activity {
     private RecyclerView recyclerView;
     private MyAdapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
     private StreamController sc;
     private ArrayList<User> user;
     private List<Streamer> streamerList;
@@ -26,9 +28,12 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recyclerview);
+        layoutManager = new LinearLayoutManager(this);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
         sc = new StreamController(this);
         sc.getStreams();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -65,6 +70,8 @@ public class MainActivity extends Activity {
         intent.putExtra("langage", streamer.getLanguage());
         intent.putExtra("type", streamer.getType());
         intent.putExtra("started_at", streamer.getStarted_at());
+        intent.putExtra("profil_image", streamer.getProfile_image_url());
+        intent.putExtra("offline_image", user.getOffline_image_url());
         MainActivity.this.startActivity(intent);
 
     }

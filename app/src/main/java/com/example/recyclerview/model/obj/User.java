@@ -7,6 +7,16 @@ public class User {
     private String profile_image_url;
     private String view_count;
 
+    public String getOffline_image_url() {
+        return offline_image_url;
+    }
+
+    public void setOffline_image_url(String offline_image_url) {
+        this.offline_image_url = offline_image_url;
+    }
+
+    private String offline_image_url;
+
     public String getId() {
         return id;
     }

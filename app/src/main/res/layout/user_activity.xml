@@ -1,59 +1,79 @@
-<LinearLayout android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="100dip" />
 
-    <TextView
-        android:id="@+id/info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dip"
-        android:text="Info de "
-        android:textSize="20dip"
-        android:textAlignment="center"/>
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Titre : "/>
-    <TextView
-        android:id="@+id/type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Type de streamer : "/>
+<ImageView
+    android:id="@+id/imageView1"
+    android:layout_width="match_parent"
+    android:layout_height="200dip"
+    android:layout_alignParentTop="true"
+    android:src="@drawable/ic_launcher_background"/>
 
-    <TextView
-        android:id="@+id/desc"
+<TextView
+    android:id="@+id/textView1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@+id/imageView1"
+    android:layout_alignRight="@+id/imageView1"
+    android:text="Info de "
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:gravity="center"
+    android:textColor="#FFFFFF"/>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Description : " />
-    <TextView
-        android:id="@+id/viewers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nombre de viewers : "/>
-    <TextView
-        android:id="@+id/total_views"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nombre de vues total"/>
-    <TextView
-        android:id="@+id/started"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Diffusion lancé à "/>
-    <TextView
-        android:id="@+id/langage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Langage : "/>
-    <TextView
-        android:id="@+id/game"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Jeu : "/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:text="Info de "
+            android:textSize="20dip"
+            android:textAlignment="center" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Titre : "/>
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Type de streamer : "/>
+
+        <TextView
+            android:id="@+id/desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description : " />
+        <TextView
+            android:id="@+id/viewers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre de viewers : "/>
+        <TextView
+            android:id="@+id/total_views"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre de vues total"/>
+        <TextView
+            android:id="@+id/started"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Diffusion lancé à "/>
+        <TextView
+            android:id="@+id/langage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Langage : "/>
+        <TextView
+            android:id="@+id/game"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jeu : "/>
+    </LinearLayout>
+
+</RelativeLayout>
