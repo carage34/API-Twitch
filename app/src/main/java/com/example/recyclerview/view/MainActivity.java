@@ -1,13 +1,18 @@
 package com.example.recyclerview.view;
 
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+
 import com.example.recyclerview.controller.MyAdapter;
 import com.example.recyclerview.R;
 import com.example.recyclerview.controller.StreamController;
@@ -17,7 +22,7 @@ import com.example.recyclerview.model.obj.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MyAdapter mAdapter;
     private LinearLayoutManager layoutManager;
@@ -30,6 +35,29 @@ public class MainActivity extends Activity {
         setContentView(R.layout.recyclerview);
         layoutManager = new LinearLayoutManager(this);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+                // show the given tab
+            }
+
+            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                // hide the given tab
+            }
+
+            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                // probably ignore this event
+            }
+        };
+
+        for (int i = 0; i < 3; i++) {
+            actionBar.addTab(
+                    actionBar.newTab()
+                            .setText("Tab " + (i + 1))
+            .setTabListener(tabListener));
+        }
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation());
