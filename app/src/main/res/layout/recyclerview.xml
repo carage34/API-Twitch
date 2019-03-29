@@ -5,6 +5,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tablayout"
+        android:background="@color/colorPrimary"
+        app:tabSelectedTextColor="@android:color/white"
+        app:tabTextColor="@android:color/black">
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Streams"
+            android:id="@+id/streams"/>
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clips"
+            android:id="@+id/clip"/>
+</android.support.design.widget.TabLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,4 +43,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

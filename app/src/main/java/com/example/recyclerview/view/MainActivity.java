@@ -35,28 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.recyclerview);
         layoutManager = new LinearLayoutManager(this);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
-            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-                // show the given tab
-            }
 
-            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-                // hide the given tab
-            }
-
-            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-                // probably ignore this event
-            }
-        };
-
-        for (int i = 0; i < 3; i++) {
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText("Tab " + (i + 1))
-            .setTabListener(tabListener));
-        }
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
@@ -80,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setStreamerList(List<Streamer> streamerList) {
-        System.out.println("RRR: " + streamerList.size());
+        //System.out.println("RRR: " + streamerList.size());
         mAdapter = new MyAdapter(streamerList, this, this.sc);
         recyclerView.setAdapter(mAdapter);
     }
