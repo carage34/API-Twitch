@@ -13,6 +13,8 @@ import com.example.recyclerview.model.obj.Game;
 import com.example.recyclerview.model.obj.Streamer;
 import com.example.recyclerview.model.obj.User;
 import com.example.recyclerview.view.MainActivity;
+import com.example.recyclerview.view.PageFragment;
+import com.example.recyclerview.view.StreamFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +66,7 @@ public class StreamController {
                 listStreamer.get(anotherListUser.size()-1).setProfile_image_url(listUser.get(0).getProfile_image_url());
                 //System.out.println("PLZ : " + ii + "" + listStreamer.get(ii).getProfile_image_url() + " " + listStreamer.get(ii).getUser_name());
                 if(anotherListUser.size()== listStreamer.size()) {
+                    System.out.println("PLZE");
                     act.setStreamerList(listStreamer);
                 }
             }

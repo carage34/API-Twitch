@@ -1,6 +1,9 @@
 package com.example.recyclerview.controller;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.pdf.PdfDocument;
+import android.support.v4.app.Fragment;
 
 import com.example.recyclerview.model.api.RestApiManager;
 import com.example.recyclerview.model.api.RestGameResponse;
@@ -9,6 +12,8 @@ import com.example.recyclerview.model.obj.Game;
 import com.example.recyclerview.model.obj.Streamer;
 import com.example.recyclerview.model.obj.User;
 import com.example.recyclerview.view.MainActivity;
+import com.example.recyclerview.view.PageFragment;
+import com.example.recyclerview.view.StreamFragment;
 import com.example.recyclerview.view.UserActivity;
 
 import java.io.IOException;
@@ -21,10 +26,9 @@ public class StreamerListener implements OnItemClickListener{
     private List<Streamer> listStreamer;
     private StreamController st;
     private MainActivity main;
-    public StreamerListener(List<Streamer> list, StreamController streamController, MainActivity ctx) {
+    public StreamerListener(List<Streamer> list, MainActivity pf) {
         this.listStreamer = list;
-        this.st = streamController;
-        this.main = ctx;
+        main = pf;
     }
 
     @Override

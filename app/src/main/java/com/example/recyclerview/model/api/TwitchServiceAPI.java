@@ -10,22 +10,29 @@ import retrofit2.http.Query;
 
 public interface TwitchServiceAPI {
     public static final String ENDPOINT = "https://api.twitch.tv/helix/";
+    public static final String ClientID =  "Client-ID: 1utxz63kdn8vmccch4stxn3payttdi";
     @Headers({
-            "Client-ID: 1utxz63kdn8vmccch4stxn3payttdi"
+            ClientID
     })
     @GET("streams")
     Call<RestStreamResponse> getStream();
 
     @Headers({
-            "Client-ID: 1utxz63kdn8vmccch4stxn3payttdi"
+            ClientID
     })
     @GET("users")
     Call<RestUserResponse> getUser(@Query("id")String id);
 
     @Headers({
-            "Client-ID: 1utxz63kdn8vmccch4stxn3payttdi"
+            ClientID
     })
     @GET("games")
     Call<RestGameResponse> getGame(@Query("id")String id);
+
+    @Headers({
+            ClientID
+    })
+    @GET("clips")
+    Call<RestClipResponse> getClip(@Query("id")String id);
 
 }

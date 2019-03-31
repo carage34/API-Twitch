@@ -16,11 +16,13 @@ import com.example.recyclerview.model.obj.Streamer;
 
 import com.example.recyclerview.R;
 import com.example.recyclerview.view.MainActivity;
+import com.example.recyclerview.view.PageFragment;
+import com.example.recyclerview.view.StreamFragment;
 
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private List<Streamer> values;
-    private Context context;
+    private MainActivity context;
     private StreamController sc;
     private View.OnClickListener mClickListener;
     private OnItemClickListener listener;
@@ -68,12 +70,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<Streamer> myDataset, MainActivity ctx, StreamController sc) {
+    public MyAdapter(List<Streamer> myDataset, MainActivity act) {
         values = myDataset;
-        this.context = ctx;
-        this.sc = sc;
+        this.context = act;
         System.out.println("LLL : " + values.toString());
-        listener = new StreamerListener(values, sc, ctx);
+        listener = new StreamerListener(values, act);
     }
 
     // Create new views (invoked by the layout manager)
@@ -99,6 +100,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
+        System.out.println("ZZZ");
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final Streamer streamer = values.get(position);
@@ -107,7 +109,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.bind(values.get(position), listener);
         System.out.println("POS : " + position);
         //final User user = urlImage.get(position);
-        Glide.with(this.context)
+        Glide.with(this.context.getBaseContext())
                 .load(streamer.getProfile_image_url())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.getImage());
