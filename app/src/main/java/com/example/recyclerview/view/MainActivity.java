@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<User> user;
     private List<Streamer> streamerList;
     private StreamController sc;
+    private ArrayList<String> gameIdList = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     public void showList(List<Streamer> list) {
         boolean ok = false;
         for(int i=0;i<list.size();i++) {
+            this.gameIdList.add(list.get(i).getGame_id());
             System.out.println("ID : " + list.get(i).getId());
             if(i==list.size()-1)
                 ok = true;
