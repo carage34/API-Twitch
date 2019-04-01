@@ -60,17 +60,18 @@ public class StreamController {
             @Override
             public void onResponse(Call<RestUserResponse> call, Response<RestUserResponse> response) {
                 RestUserResponse restUserResponse = response.body();
-                List<User> listUser = restUserResponse.getData();
-                //System.out.println("PLZ : " + listUser.get(0).getProfile_image_url() + " " + listUser.get(0).getLogin());
-                anotherListUser.add(listUser.get(0));
-                listStreamer.get(anotherListUser.size()-1).setProfile_image_url(listUser.get(0).getProfile_image_url());
-                //System.out.println("PLZ : " + ii + "" + listStreamer.get(ii).getProfile_image_url() + " " + listStreamer.get(ii).getUser_name());
-                if(anotherListUser.size()== listStreamer.size()) {
-                    System.out.println("PLZE");
-                    act.setStreamerList(listStreamer);
+                if(restUserResponse!=null) {
+                    List<User> listUser = restUserResponse.getData();
+                    //System.out.println("PLZ : " + listUser.get(0).getProfile_image_url() + " " + listUser.get(0).getLogin());
+                    anotherListUser.add(listUser.get(0));
+                    listStreamer.get(anotherListUser.size()-1).setProfile_image_url(listUser.get(0).getProfile_image_url());
+                    //System.out.println("PLZ : " + ii + "" + listStreamer.get(ii).getProfile_image_url() + " " + listStreamer.get(ii).getUser_name());
+                    if(anotherListUser.size()== listStreamer.size()) {
+                        System.out.println("PLZE");
+                        act.setStreamerList(listStreamer);
+                    }
                 }
             }
-
             @Override
             public void onFailure(Call<RestUserResponse> call, Throwable t) {
                 Log.d("Erreur", "API KO");

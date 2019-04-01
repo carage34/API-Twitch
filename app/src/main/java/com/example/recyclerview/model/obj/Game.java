@@ -25,6 +25,10 @@ public class Game {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return this.name;
+    }
     private String box_art_url;
     private String id;
     private String name;

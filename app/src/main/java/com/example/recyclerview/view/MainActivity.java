@@ -11,17 +11,23 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.ArrayAdapter;
 
 import com.example.recyclerview.R;
 import com.example.recyclerview.controller.PageAdapter;
 import com.example.recyclerview.controller.MyAdapter;
 import com.example.recyclerview.controller.StreamController;
+import com.example.recyclerview.model.api.RestApiManager;
+import com.example.recyclerview.model.api.RestGameResponse;
 import com.example.recyclerview.model.obj.Game;
 import com.example.recyclerview.model.obj.Streamer;
 import com.example.recyclerview.model.obj.User;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
 
 import static java.security.AccessController.getContext;
 
@@ -32,28 +38,67 @@ public class MainActivity extends AppCompatActivity {
     private List<Streamer> streamerList;
     private StreamController sc;
     private ArrayList<String> gameIdList = new ArrayList<String>();
+    public static ArrayList<Game> gameList = new ArrayList<Game>();
+    public static ArrayList<String> gameNameList = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        android.support.v7.widget.Toolbar tb = findViewById(R.id.toolbar);
+        tb.setTitle("API Twitch");
 
         sc = new StreamController(this);
         sc.getStreams();
 
     }
     public void showList(List<Streamer> list) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         boolean ok = false;
         for(int i=0;i<list.size();i++) {
             this.gameIdList.add(list.get(i).getGame_id());
-            System.out.println("ID : " + list.get(i).getId());
+            //System.out.println("AAA" + list.get(i).getGame_id());
+            //System.out.println("ID : " + list.get(i).getId());
             if(i==list.size()-1)
                 ok = true;
             sc.getUsers(list.get(i).getUser_id(), i);
         }
 
+
+    }
+
+    public void fetchGame() {
+        for(int i=0;i<gameIdList.size();i++) {
+            RestGameResponse resultGame = null;
+            Call<RestGameResponse> callGame = RestApiManager.getTwitchAPI().getGame(gameIdList.get(i));
+            try {
+                resultGame = callGame.execute().body();
+
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+            if(resultGame != null) {
+                Game game = resultGame.getData().get(0);
+                if(!(gameContainsId(game.getId()))) {
+                    gameList.add(game);
+                    gameNameList.add(game.getName());
+                    System.out.println("DDD : " + game.getName());
+                }
+            }
+        }
+    }
+
+    public boolean gameContainsId(String id) {
+        for(Game game : gameList) {
+            if(game.getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setStreamerList(List<Streamer> streamerList) {
+        fetchGame();
         configureViewPagerAndTabs(streamerList);
     }
 
