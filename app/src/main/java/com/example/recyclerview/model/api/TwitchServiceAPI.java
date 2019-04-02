@@ -26,13 +26,19 @@ public interface TwitchServiceAPI {
     @Headers({
             ClientID
     })
+    @GET("games/top")
+    Call<RestGameResponse> getTopGame(@Query("first")String count);
+
+    @Headers({
+            ClientID
+    })
     @GET("games")
-    Call<RestGameResponse> getGame(@Query("id")String id);
+    Call<RestGameResponse> getGame(@Query("id")String gameid);
 
     @Headers({
             ClientID
     })
     @GET("clips")
-    Call<RestClipResponse> getClip(@Query("id")String id);
+    Call<RestClipResponse> getClip(@Query("game_id")String game_id);
 
 }

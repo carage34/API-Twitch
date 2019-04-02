@@ -6,9 +6,11 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.recyclerview.model.api.RestApiManager;
+import com.example.recyclerview.model.api.RestClipResponse;
 import com.example.recyclerview.model.api.RestGameResponse;
 import com.example.recyclerview.model.api.RestStreamResponse;
 import com.example.recyclerview.model.api.RestUserResponse;
+import com.example.recyclerview.model.obj.Clip;
 import com.example.recyclerview.model.obj.Game;
 import com.example.recyclerview.model.obj.Streamer;
 import com.example.recyclerview.model.obj.User;
@@ -16,6 +18,7 @@ import com.example.recyclerview.view.MainActivity;
 import com.example.recyclerview.view.PageFragment;
 import com.example.recyclerview.view.StreamFragment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +33,9 @@ public class StreamController {
     private List<Game> listGame;
     private ArrayList<User> anotherListUser = new ArrayList<User>();
     private int ii;
+    public StreamController() {
+
+    }
     public StreamController(MainActivity activity) {
         this.act = activity;
     }
@@ -111,5 +117,17 @@ public class StreamController {
             }
         });
         //return listGame.get(0);
+    }
+
+    public List<Clip> getClip(String gameId) {
+        RestClipResponse resultClip = null;
+        Call<RestClipResponse> call = RestApiManager.getTwitchAPI().getClip(gameId);
+        try {
+            resultClip = call.execute().body();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println("GGG" + resultClip.getData().get(0));
+        return resultClip.getData();
     }
 }

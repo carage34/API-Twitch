@@ -18,7 +18,9 @@ import com.example.recyclerview.controller.PageAdapter;
 import com.example.recyclerview.controller.MyAdapter;
 import com.example.recyclerview.controller.StreamController;
 import com.example.recyclerview.model.api.RestApiManager;
+import com.example.recyclerview.model.api.RestClipResponse;
 import com.example.recyclerview.model.api.RestGameResponse;
+import com.example.recyclerview.model.obj.Clip;
 import com.example.recyclerview.model.obj.Game;
 import com.example.recyclerview.model.obj.Streamer;
 import com.example.recyclerview.model.obj.User;
@@ -38,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Streamer> streamerList;
     private StreamController sc;
     private ArrayList<String> gameIdList = new ArrayList<String>();
-    public static ArrayList<Game> gameList = new ArrayList<Game>();
-    public static ArrayList<String> gameNameList = new ArrayList<String>();
+    public static List<Game> gameList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,33 +69,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void fetchGame() {
-        for(int i=0;i<gameIdList.size();i++) {
-            RestGameResponse resultGame = null;
-            Call<RestGameResponse> callGame = RestApiManager.getTwitchAPI().getGame(gameIdList.get(i));
-            try {
-                resultGame = callGame.execute().body();
-
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-            if(resultGame != null) {
-                Game game = resultGame.getData().get(0);
-                if(!(gameContainsId(game.getId()))) {
-                    gameList.add(game);
-                    gameNameList.add(game.getName());
-                    System.out.println("DDD : " + game.getName());
-                }
-            }
+        RestGameResponse resultGame = null;
+        Call<RestGameResponse> callGame = RestApiManager.getTwitchAPI().getTopGame("100");
+        try {
+            resultGame = callGame.execute().body();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-    }
-
-    public boolean gameContainsId(String id) {
-        for(Game game : gameList) {
-            if(game.getId().equals(id)) {
-                return true;
-            }
-        }
-        return false;
+        gameList= resultGame.getData();
     }
 
     public void setStreamerList(List<Streamer> streamerList) {

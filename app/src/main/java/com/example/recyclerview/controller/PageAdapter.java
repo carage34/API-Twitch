@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.recyclerview.model.obj.Clip;
 import com.example.recyclerview.model.obj.Streamer;
 import com.example.recyclerview.view.MainActivity;
 import com.example.recyclerview.view.PageFragment;
@@ -35,7 +36,7 @@ public class PageAdapter extends FragmentPagerAdapter {
             case 0:
                 return PageFragment.newInstance(list, actt);
             case 1:
-                return SampleTwo.newInstance();
+                return SampleTwo.newInstance(actt);
         }
         return fragment;
     }
