@@ -45,7 +45,7 @@ Cette application affiche la liste des 20 premiers streamer sur twitch (Trié pa
 
 <img src="autocompletion.png" alt="autocompletion">
 
-- Affichage des clip en dessous après avoir cliquer sur un jeu dans la liste
+- Affichage des clips en dessous après avoir cliqué sur un jeu dans la liste.
 - Affichage en premier du nom du clip suivi du pseudo de celui qui a clippé.
 
 <img src="clip.png" alt="clip">
