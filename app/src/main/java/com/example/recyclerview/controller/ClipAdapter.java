@@ -76,7 +76,7 @@ public class ClipAdapter extends RecyclerView.Adapter<ClipAdapter.ViewHolder> {
         this.context = act;
         System.out.println("zzzz");
         System.out.println("LLL : " + values.toString());
-        listener = new ClipListener(values);
+        listener = new ClipListener(values, act);
     }
 
     // Create new views (invoked by the layout manager)

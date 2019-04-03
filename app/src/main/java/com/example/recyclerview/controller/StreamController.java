@@ -1,10 +1,12 @@
 package com.example.recyclerview.controller;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.example.recyclerview.model.ObjectSerializer;
 import com.example.recyclerview.model.api.RestApiManager;
 import com.example.recyclerview.model.api.RestClipResponse;
 import com.example.recyclerview.model.api.RestGameResponse;
@@ -15,6 +17,9 @@ import com.example.recyclerview.model.obj.Game;
 import com.example.recyclerview.model.obj.Streamer;
 import com.example.recyclerview.model.obj.User;
 import com.example.recyclerview.view.MainActivity;
+import android.content.Context;
+import android.widget.Toast;
+
 import com.example.recyclerview.view.PageFragment;
 import com.example.recyclerview.view.StreamFragment;
 
@@ -46,12 +51,22 @@ public class StreamController {
             public void onResponse(Call<RestStreamResponse> call, Response<RestStreamResponse> response) {
                 RestStreamResponse restStreamResponse = response.body();
                 listStreamer = restStreamResponse.getData();
-                act.showList(listStreamer);
+                act.showList(listStreamer, true);
             }
 
             @Override
             public void onFailure(Call<RestStreamResponse> call, Throwable t) {
-                Log.d("Erreur", "API KO");
+                Toast.makeText(act, "Pas de connexion", Toast.LENGTH_LONG).show();
+                SharedPreferences sharedPref = act.getPreferences(Context.MODE_PRIVATE);
+                ArrayList<Streamer> list = null;
+                try {
+                    list = (ArrayList<Streamer>) ObjectSerializer.deserialize(sharedPref.getString("liststreamer", ObjectSerializer.serialize(new ArrayList<Streamer>())));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                act.showList(list, false);
             }
         });
     }

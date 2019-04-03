@@ -66,8 +66,6 @@ public class SampleTwo extends Fragment {
                 list = sc.getClip(MainActivity.gameList.get(pos).getId());
                 mAdapter = new ClipAdapter(list, act);
                 recyclerView.setAdapter(mAdapter);
-
-                Toast.makeText(getContext(), MainActivity.gameList.get(pos).getId(), Toast.LENGTH_LONG).show();
             }
         });
         recyclerView = (RecyclerView) result.findViewById(R.id.clip_recyclerview);

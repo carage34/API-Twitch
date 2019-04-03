@@ -1,5 +1,8 @@
 package com.example.recyclerview.view;
+import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
@@ -17,6 +20,7 @@ import com.example.recyclerview.R;
 import com.example.recyclerview.controller.PageAdapter;
 import com.example.recyclerview.controller.MyAdapter;
 import com.example.recyclerview.controller.StreamController;
+import com.example.recyclerview.model.ObjectSerializer;
 import com.example.recyclerview.model.api.RestApiManager;
 import com.example.recyclerview.model.api.RestClipResponse;
 import com.example.recyclerview.model.api.RestGameResponse;
@@ -41,31 +45,31 @@ public class MainActivity extends AppCompatActivity {
     private StreamController sc;
     private ArrayList<String> gameIdList = new ArrayList<String>();
     public static List<Game> gameList;
+    public static SharedPreferences sharedPref;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         android.support.v7.widget.Toolbar tb = findViewById(R.id.toolbar);
         tb.setTitle("API Twitch");
-
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         sc = new StreamController(this);
         sc.getStreams();
 
     }
-    public void showList(List<Streamer> list) {
+    public void showList(List<Streamer> list, boolean ok) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        boolean ok = false;
-        for(int i=0;i<list.size();i++) {
-            this.gameIdList.add(list.get(i).getGame_id());
-            //System.out.println("AAA" + list.get(i).getGame_id());
-            //System.out.println("ID : " + list.get(i).getId());
-            if(i==list.size()-1)
-                ok = true;
-            sc.getUsers(list.get(i).getUser_id(), i);
+        if(ok) {
+            for(int i=0;i<list.size();i++) {
+                this.gameIdList.add(list.get(i).getGame_id());
+                //System.out.println("AAA" + list.get(i).getGame_id());
+                //System.out.println("ID : " + list.get(i).getId());
+                sc.getUsers(list.get(i).getUser_id(), i);
+            }
         }
-
-
     }
 
     public void fetchGame() {
@@ -80,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setStreamerList(List<Streamer> streamerList) {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        ArrayList<Streamer> arrlistofOptions = new ArrayList<>(streamerList);
+        try {
+            editor.putString("liststreamer", ObjectSerializer.serialize(arrlistofOptions));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        editor.commit();
         fetchGame();
         configureViewPagerAndTabs(streamerList);
     }
@@ -115,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("started_at", streamer.getStarted_at());
         intent.putExtra("profil_image", streamer.getProfile_image_url());
         intent.putExtra("offline_image", user.getOffline_image_url());
-        this.startActivity(intent);
+        this.startActivity(intent,  ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
 
     }
 }

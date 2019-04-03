@@ -25,7 +25,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Liste de clips"/>
+        android:text="Liste de clips"
+        android:textSize="20dip"
+        android:textStyle="bold"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/clip_recyclerview"
         android:layout_width="match_parent"
