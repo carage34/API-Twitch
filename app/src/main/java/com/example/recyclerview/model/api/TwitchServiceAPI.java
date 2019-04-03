@@ -1,12 +1,14 @@
 package com.example.recyclerview.model.api;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface TwitchServiceAPI {
     public static final String ENDPOINT = "https://api.twitch.tv/helix/";

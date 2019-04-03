@@ -22,10 +22,15 @@ import android.widget.Toast;
 
 import com.example.recyclerview.view.PageFragment;
 import com.example.recyclerview.view.StreamFragment;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,6 +40,7 @@ public class StreamController {
     private  MainActivity act;
     private List<Streamer> listStreamer;
     private List<User> listUser;
+    private List<User> listUsers = new ArrayList<>();
     private List<Game> listGame;
     private ArrayList<User> anotherListUser = new ArrayList<User>();
     private int ii;
@@ -52,23 +58,23 @@ public class StreamController {
                 RestStreamResponse restStreamResponse = response.body();
                 listStreamer = restStreamResponse.getData();
                 act.showList(listStreamer, true);
+                for(int i=0;i<listStreamer.size();i++) {
+                    getUser(listStreamer.get(i).getUser_id());
+                }
             }
 
             @Override
             public void onFailure(Call<RestStreamResponse> call, Throwable t) {
+                Gson gson = new Gson();
                 Toast.makeText(act, "Pas de connexion", Toast.LENGTH_LONG).show();
                 SharedPreferences sharedPref = act.getPreferences(Context.MODE_PRIVATE);
-                ArrayList<Streamer> list = null;
-                try {
-                    list = (ArrayList<Streamer>) ObjectSerializer.deserialize(sharedPref.getString("liststreamer", ObjectSerializer.serialize(new ArrayList<Streamer>())));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                act.showList(list, false);
+                Type type = new TypeToken<List<Streamer>>(){}.getType();
+                String json = sharedPref.getString("liststreamer", "liststreamer");
+                List<Streamer> list = gson.fromJson(json, type);
+                act.configureViewPagerAndTabs(list);
             }
         });
+
     }
 
     public void getUsers(String id, int i) {
@@ -106,7 +112,12 @@ public class StreamController {
             @Override
             public void onResponse(Call<RestUserResponse> call, Response<RestUserResponse> response) {
                 RestUserResponse restUserResponse = response.body();
-                listUser = restUserResponse.getData();
+                if(restUserResponse!= null) {
+                    listUser = restUserResponse.getData();
+                    listUsers.add(listUser.get(0));
+                    System.out.println("HHH " + listUser.get(0).getLogin());
+                }
+
             }
 
             @Override
@@ -144,5 +155,9 @@ public class StreamController {
         }
         System.out.println("GGG" + resultClip.getData().get(0));
         return resultClip.getData();
+    }
+
+    public void getTopGame() {
+
     }
 }

@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.example.recyclerview.R;
 import com.example.recyclerview.controller.PageAdapter;
@@ -28,6 +29,7 @@ import com.example.recyclerview.model.obj.Clip;
 import com.example.recyclerview.model.obj.Game;
 import com.example.recyclerview.model.obj.Streamer;
 import com.example.recyclerview.model.obj.User;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -85,18 +87,22 @@ public class MainActivity extends AppCompatActivity {
 
     public void setStreamerList(List<Streamer> streamerList) {
         SharedPreferences.Editor editor = sharedPref.edit();
-        ArrayList<Streamer> arrlistofOptions = new ArrayList<>(streamerList);
-        try {
-            editor.putString("liststreamer", ObjectSerializer.serialize(arrlistofOptions));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //Toast.makeText(this, "PLZ " + arrlistofOptions.get(0).getUser_name(), Toast.LENGTH_LONG).show();
+        Gson gson = new Gson();
+        String jsonStream = gson.toJson(streamerList);
+        editor.putString("liststreamer", jsonStream);
+        editor.commit();
+        editor.putString("test", "ceci est un test");
         editor.commit();
         fetchGame();
         configureViewPagerAndTabs(streamerList);
     }
 
-    private void configureViewPagerAndTabs(List<Streamer> streamerList){
+    public void setTab() {
+        configureViewPagerAndTabs(streamerList);
+    }
+
+    public void configureViewPagerAndTabs(List<Streamer> streamerList){
         //Get ViewPager from layout
         ViewPager pager = (ViewPager)findViewById(R.id.viewPager);
         //Set Adapter PageAdapter and glue it together
