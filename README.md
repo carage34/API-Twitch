@@ -29,7 +29,7 @@ Cette application affiche la liste des 20 premiers streamer sur twitch (Trié pa
 
 - Liste des 20 streamers ordonné par nombre de spectateurs.
 
-<img src="premier.png" alt="streamer">
+<img src="premier.png" alt="streamer" width="30%">
 
 ### Deuxième activité 
 
