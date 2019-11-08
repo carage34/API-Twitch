@@ -35,17 +35,17 @@ Cette application affiche la liste des 20 premiers streamer sur twitch (Trié pa
 
 - Affichage des détails du stream sélectionné.
 
-<img src="deuxieme.png" alt="liste pokemon">
+<img src="deuxieme.png" alt="stream details" width="30%">
 
 ### Deuxieme fragment
 
 - Barre de recherche de jeu avec autocompletion (100 jeux selectionnable correspondant aux plus vu sur Twitch)
 
-<img src="recherche.png" alt="recherche"><br/>
+<img src="recherche.png" alt="recherche" width="30%"><br/>
 
-<img src="autocompletion.png" alt="autocompletion">
+<img src="autocompletion.png" alt="autocompletion" width="30%">
 
 - Affichage des clips en dessous après avoir cliqué sur un jeu dans la liste.
 - Affichage en premier du nom du clip suivi du pseudo de celui qui a clippé.
 
-<img src="clip.png" alt="clip">
+<img src="clip.png" alt="clip" width="30%">
